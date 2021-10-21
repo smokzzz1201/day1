@@ -2,16 +2,36 @@
    <div>
   <div>	<table class="table table-dark">
 				<tr v-for="item in students"  v-bind:key="item.id"> 
-					<td><img v-bind:src="item.photo" width="70px"></td>
-				<td>{{item.mark}} <input v-model="mark1" v-on:click="updateStudent()" v-bind:style="showInput ? 'display:inline' : 'display:none'"></td>
-				<td><input type="checkbox" v-bind:checked="item.isDonePr"> <input type="checkbox" v-model="isDonePr1" v-on:click="updateStudent()" v-bind:style="showInput ? 'display:inline' : 'display:none'"></td>
-				<td>{{item.name}} <input v-model="name1" v-on:click="updateStudent()" v-bind:style="showInput ? 'display:inline' : 'display:none'"></td>
-				<td>{{item.group}} <input v-model="group1" v-on:click="updateStudent()" v-bind:style="showInput ? 'display:inline' : 'display:none'"></td>
-                  <td> <a href="#" v-on:click="deleteStudent(item._id)">Видалити</a></td>
-<td><button v-on:click="getData(item._id,item.mark,item.isDonePr,item.name, item.group)" ><img src="components/Black_pencil.svg" width="25px"></button>
-<button v-on:click="updateStudent()" v-bind:style="showInput ? 'display:inline' : 'display:none'">edit</button></td>
-			</tr>
-				</table>
+                    <td>
+                        <img v-bind:src="item.photo" width="70px">
+                    </td>
+                    <td>  
+                        <div v-if="item._id !== studId">{{item.mark}}</div>  
+                        <input v-if="item._id == studId" v-model="mark1"> 
+                    </td>
+                    <td>
+                        <input type="checkbox" v-if="item._id !== studId" v-bind:checked="item.isDonePr"> 
+                        <input type="checkbox" v-if="item._id == studId" v-model="isDonePr1">
+                    </td>
+                    <td>
+                       <div v-if="item._id !== studId"> {{item.name}} </div>
+                        <input v-if="item._id == studId" v-model="name1" >
+                    </td>
+                    <td>
+                      <div v-if="item._id !== studId">  {{item.group}} </div>
+                        <input  v-if="item._id == studId" v-model="group1">
+                    </td>
+                    <td> 
+                        <a href="#" v-on:click="deleteStudent(item._id)">Видалити</a>
+                    </td>
+                    <td>
+                        <button v-on:click="getData(item._id,item.mark,item.isDonePr,item.name, item.group)" >
+                            <img src="components/Black_pencil.svg" width="25px">
+                        </button>
+                        <button v-on:click="updateStudent()" v-if="group1 !== ''">edit</button>
+                    </td>
+			    </tr>
+		</table>
 
 
                 <h3>Добавление студента:</h3>
@@ -141,6 +161,7 @@ import VueAxios from 'vue-axios'
             axios.get("http://46.101.212.195:3000/students").then((response)=>{
                 this.students = response.data;
             })
+            this.studId = "";
         },
       
         convert:function(){
