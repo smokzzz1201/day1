@@ -1,4 +1,29 @@
+<template>
+   <div>
+  <div>	<table class="table table-dark">
+				<tr v-for="item in students"  v-bind:key="item.id"> 
+					<td><img v-bind:src="item.photo" width="70px"></td>
+				<td>{{item.mark}}</td>
+				<td><input type="checkbox" v-bind:checked="item.isDonePr"></td>
+				<td>{{item.name}}</td>
+				<td>{{item.group}}</td>
+			</tr>
+				</table>
+				<h1>Currency Converter</h1>
+				<span>Enter Amount:</span><input type = "number" v-model.number = "start_value" placeholder = "Enter Amount"  /><br/><br/>
+				<span>Convert From:</span>
+				<input  placeholder="EUR, RUR, USD" v-model="start_ccy" style = "width:300px;font-size:25px;">
+			
+				<span>Convert To:</span>
+				<input   placeholder="EUR, RUR, USD" v-model="end_ccy" style = "width:300px;font-size:25px;">
+				<button v-on:click="convert" >Convert</button>
+				<br>{{result}} 
+                </div>  
+   </div>
+</template>
 
+<script>
+  
 var students = [{
     "id" : 1,
     "pib" : "Sladkova Olga",
@@ -24,9 +49,9 @@ var students = [{
 import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-new Vue({
-     el: '#app',
-     data: {
+
+   export default {
+        data: {
          students: [],
          search:'',
          currency:[],
@@ -73,7 +98,8 @@ new Vue({
             this.result = this.start_value + " " + this.start_ccy + " --> " + this.end_value + " " + this.end_ccy;
             
         }
-     },
-  
- });
-
+     }
+    }
+</script>
+<style scoped> 
+</style>
