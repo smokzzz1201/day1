@@ -1,3 +1,4 @@
+
 var path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 module.exports = {
@@ -18,7 +19,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // make sure to include the plugin!
     new VueLoaderPlugin()
   ],
   devServer: {
@@ -27,3 +27,6 @@ module.exports = {
     port: 8080
   }
 };
+
+
+
