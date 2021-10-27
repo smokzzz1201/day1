@@ -1,5 +1,9 @@
 <template>
    <div>
+       <link rel="stylesheet" id="oform" v-bind:href="chooseOform == 'switch1' ? './switch1.css' : './switch2.css'">
+        <button  value="switch1" name="switch" v-on:click="takeOform('switch1')">White</button>
+                   <button  value="switch2" name="switch" v-on:click="takeOform('switch2')">Black</button>
+      <h2> Количество студентов: {{studentsCount}} </h2>
   <div>	<table class="table table-dark">
 				<tr v-for="item in students"  v-bind:key="item.id"> 
                     
@@ -84,6 +88,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+
    export default {
             
       data: function() {
@@ -123,15 +128,27 @@ import VueAxios from 'vue-axios'
      mounted: function(){
          axios.get("http://46.101.212.195:3000/students").then((response) => {
          console.log(response.data);
-         this.students = response.data; })
+         this.students = response.data;
+         this.$store.commit('setCount', this.students.length); })
          axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5").then((response)=>{
             console.log(response.data);
             this.currency = response.data;
         })
 },
-
+    computed: {
+ 
+  studentsCount () {
+    return this.$store.getters.getCount
+  },
+         chooseOform () {
+    return this.$store.getters.getOform
+  }
+},
      
      methods: {
+          takeOform: function(oform) {
+            this.$store.commit('setOform', oform)
+        },
      
         addStudent:function(){
             Vue.axios.post("http://46.101.212.195:3000/students", {
@@ -186,8 +203,10 @@ import VueAxios from 'vue-axios'
             this.end_value=(this.start_value*this.sell)/this.buy;
             this.result = this.start_value + " " + this.start_ccy + " --> ";
             
-        }
+        },
+       
      },
+ 
      filters:{
             roundValue: function(value){
                 return parseFloat(value.toFixed(2));
