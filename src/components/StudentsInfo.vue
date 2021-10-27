@@ -34,7 +34,7 @@ mounted: function (){
     .then( (response) => {
         console.log(response.data)
         this.student = response.data;
-        this.$store.commit('setCount', 1);
+ 
     })
     
 },

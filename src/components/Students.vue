@@ -158,8 +158,9 @@ import VueAxios from 'vue-axios'
                 group: this.group,
 
             })
-            axios.get("http://46.101.212.195:3000/students")
+         
             .then((response) => {
+                   axios.get("http://46.101.212.195:3000/students")
                 this.students = response.data;
             })
         },
@@ -168,6 +169,7 @@ import VueAxios from 'vue-axios'
             })
             axios.get("http://46.101.212.195:3000/students")
             .then((response) => {
+                       
                 this.students = response.data;
             })
         },
