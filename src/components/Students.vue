@@ -32,7 +32,7 @@
                         </select>
                     </td>
                     <td> 
-                        <a href="#" v-on:click="deleteStudent(item._id)">Видалити</a>
+                        <a href="#" v-on:click.prevent="deleteStudent(item._id)" v-show="item.group==getCurrentUser.group">Видалити</a>
                     </td>
                     <td>
                         <button v-on:click="getData(item._id,item.mark,item.isDonePr,item.name, item.group)" >
@@ -142,7 +142,10 @@ import VueAxios from 'vue-axios'
   },
          chooseOform () {
     return this.$store.getters.getOform
-  }
+  },
+   getCurrentUser () {
+    return this.$store.getters.getUser
+  },
 },
      
      methods: {
